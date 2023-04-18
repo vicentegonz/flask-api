@@ -1,0 +1,14 @@
+{% extends "shared/shared.html" %}
+
+{% block title %} 
+  <title>Acceso</title>
+{% endblock %} 
+
+{% block content %} 
+    <p>{{data}}</p>
+  {% if granted %}
+    <p>acceso concedido</p>
+  {% else %}
+    <p>acceso denegado</p>
+  {% endif %}
+{% endblock %}

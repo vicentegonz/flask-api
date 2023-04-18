@@ -1,0 +1,127 @@
+{% extends "shared/shared.html" %}
+
+{% block title %} 
+  <link rel="stylesheet" href="{{ url_for('static', filename='/styles/keypad.css') }}">
+  <title>{{header}}</title>
+{% endblock %} 
+
+{% block content %} 
+  <div class="options">
+    <div class="keypad">
+      <div class="keys-row">
+        <button id="1" class="key-btn" onclick=addButtonValue(id)>1</button>
+        <button id="2" class="key-btn" onclick=addButtonValue(id)>2</button>
+        <button id="3" class="key-btn" onclick=addButtonValue(id)>3</button>
+      </div>
+      <div class="keys-row">
+        <button id="4" class="key-btn" onclick=addButtonValue(id)>4</button>
+        <button id="5" class="key-btn" onclick=addButtonValue(id)>5</button>
+        <button id="6" class="key-btn" onclick=addButtonValue(id)>6</button>
+      </div>
+      <div class="keys-row">
+        <button id="7" class="key-btn" onclick=addButtonValue(id)>7</button>
+        <button id="8" class="key-btn" onclick=addButtonValue(id)>8</button>
+        <button id="9" class="key-btn" onclick=addButtonValue(id)>9</button>
+      </div>
+      <div class="keys-row">
+        <button id="k" class="key-btn" onclick=addButtonValue(id)>K</button>
+        <button id="0" class="key-btn" onclick=addButtonValue(id)>0</button>
+        <button id="d" class="key-btn" onclick=addButtonValue(id)>DEL</button>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="inputs">
+        {%if header == "Identidad" %}
+          <div class="input-container">
+            <label for="ci">RUT/DNI/Pasaporte </label>
+            <div class="ci-container">
+              <input class="ci-input" type="text" name="ci" id="ci" placeholder="kkkkkkkk" onclick=selectInput(id)>
+              <p> &nbsp-&nbsp </p>
+              <input class="ci-input small" type="text" name="ci2" id="ci2" placeholder="k" onclick=selectInput(id)>
+            </div>
+          </div>
+        {% elif header == "Identificacion" %}
+          <div class="input-container">
+            <label for="ci">RUT/DNI/Pasaporte </label>
+            <div class="ci-container">
+              <input class="ci-input" type="text" name="ci" id="ci" placeholder="kkkkkkkk" onclick=selectInput(id)>
+              <p> &nbsp-&nbsp </p>
+              <input class="ci-input small" type="text" name="ci2" id="ci2" placeholder="k" onclick=selectInput(id)>
+            </div>
+          </div>
+          <div class="input-container pin">
+            <label for="pin">PIN </label>
+            <input class="pin-input" type="text" name="pin" id="pin" placeholder="*" onclick=selectInput(id)>
+          </div>
+        {% else %}
+          <div class="input-container">
+            <label for="cel">CELULAR </label>
+            <input type="text" name="cel" id="cel" placeholder="CEL" onclick=selectInput(id)>
+          </div>
+          <div class="input-container pin">
+            <label for="pin">PIN </label>
+            <input class="pin-input" type="text" name="pin" id ="pin" placeholder="*" onclick=selectInput(id)>
+          </div>
+        {% endif %}
+        </div>
+      <div class="buttons">
+        <button class="mid-btn" onclick=submitInfo()>OK</button>
+        <a href="manual"><button class="mid-btn">CANCELAR</button></a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedInput = null
+
+    function addButtonValue(id) {
+      if (selectedInput == null) return;
+      var button = document.getElementById(id);
+      var buttonValue = button.innerText;
+      if (buttonValue == "DEL") {
+        selectedInput.value = selectedInput.value.slice(0, -1);
+      }
+      else {
+        selectedInput.value += buttonValue;
+      }
+    }
+
+    function selectInput(id) {
+      selectedInput = document.getElementById(id)
+    }
+
+    function submitInfo() {
+      const header = document.querySelector("title").innerText;
+      var cel = "";
+      var ci = "";
+      var ci2 = "";
+      var pin = "";
+      if (header == "Telefono"){
+        var cel = document.getElementById("cel").value;
+        var pin = document.getElementById("pin").value;
+        if (cel.length < 8 || pin.length != 4) {
+          alert("Datos incorrectos");
+          return;
+        }
+      } else if (header == "Identidad"){
+        var ci = document.getElementById("ci").value;
+        var ci2 = document.getElementById("ci2").value;
+        if (ci.length < 7 || ci.length > 8 || ci2.length != 1) {
+          alert("Datos incorrectos");
+          return;
+        }
+      } else if (header == "Identificacion"){
+        var ci = document.getElementById("ci").value;
+        var ci2 = document.getElementById("ci2").value;
+        var pin = document.getElementById("pin").value;
+        if (ci.length < 7 || ci.length > 8 || ci2.length != 1 || pin.length != 4) {
+          alert("Datos incorrectos");
+          return;
+        }
+      }
+      window.location.href = "acceso/" + cel + "," + ci + "-" + ci2 + "," + pin;
+      
+    }
+
+  </script>
+{% endblock %} 

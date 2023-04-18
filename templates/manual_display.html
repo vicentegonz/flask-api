@@ -1,0 +1,20 @@
+{% extends "shared/shared.html" %}
+
+{% block title %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='/styles/manual_display.css') }}">
+  <title>Manual</title>
+{% endblock %} 
+
+{% block content %} 
+  <div class="container">
+    
+      <a href="keypad/telefono"><button class="big-btn" href="manual">Usar numero de telefono</button></a>
+    
+    
+      <a href="keypad/identidad"><button class="blue big-btn" href="manual">Usar documento de identidad</button></a>
+    
+    
+      <a href="/"><button class="wide-btn" href="manual">Cancelar</button></a>
+    
+  </div>
+{% endblock %} 

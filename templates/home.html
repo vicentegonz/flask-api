@@ -1,0 +1,20 @@
+{% extends "shared/shared.html" %}
+
+{% block title %} 
+  <link rel="stylesheet" href="{{ url_for('static', filename='/styles/home.css') }}">
+  <title>Home</title>
+{% endblock %} 
+
+{% block content %} 
+  <div class="img-container">
+    <img src="{{ url_for('static', filename='/img/logo_bw.bmp') }}" alt="SafeCard-logo">
+  </div>
+  <div class="options">
+    <div class="text-container">
+      <p>Ingresa presentando al lector tu codigo QR o presiona manual</p>
+    </div>
+    <div class="btn-container">
+      <a href="manual"><button href="manual">Manual</button></a>
+    </div>
+  </div>
+{% endblock %} 
